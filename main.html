@@ -15,11 +15,40 @@
       box-sizing: border-box;
     }
 
+    /* 
+      Body with a deep red background and a repeating faint gold line pattern overlay.
+      The repeating-linear-gradient creates diagonal faint gold lines.
+    */
     body {
       background-color: #4B1B2F; 
+      background-image: repeating-linear-gradient(
+        45deg,
+        rgba(255, 215, 0, 0.1),
+        rgba(255, 215, 0, 0.1) 1px,
+        transparent 1px,
+        transparent 10px
+      );
       color: #F2E6E0;           
       font-family: "Georgia", serif;
       line-height: 1.6;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    /*
+      Gold embroidered frame using a fixed pseudo-element.
+      Adjust top/left/right/bottom values and border style as desired.
+    */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 1rem;
+      left: 1rem;
+      right: 1rem;
+      bottom: 1rem;
+      border: 4px double #FFD700;
+      pointer-events: none;
+      z-index: 9999;
     }
 
     .content {
@@ -28,9 +57,11 @@
       padding: 40px 20px;
       position: relative;
     }
+
     a:link {
-        color: #FFD700; /* gold links */
+      color: #FFD700; /* gold links */
     }
+
     .stretched {
       display: inline-block;        
       transform: scaleY(1.5);       
@@ -61,7 +92,6 @@
       opacity: 0.9;      
       margin-top: 5px;
     }
-
 
     h1 {
       font-weight: 700;  
@@ -105,11 +135,6 @@
       gap: 5px;
       font-size: 0.95em;
     }
-    /* 
-      Legend color boxes:
-        - No border-radius or keep slight rounding
-        - We'll override their background from JS if needed
-    */
     .legend-color-box {
       width: 20px;
       height: 20px;
@@ -143,33 +168,30 @@
     <h2>ERA #2: Data Visualization</h2>
     <h1 class="stretched">Engineering Ethics &amp; Design</h1>
     
-
     <p>
-        Welcome to my little corner of the internet where I delve deeper into the fascinating world of engineering ethics and design. In this exploration, 
-        I focus on three key pillars: Design for Safety, Design for Environment, and Design for Cost. Now, you might think engineering is all about gadgets
-         and gizmos, but it’s so much more than that, it’s about ensuring our innovations keep people safe, protect our planet, and remain financially viable.
-          Drawing insights from a variety of extra resources—scholarly articles, influential books, and some awesome ENGG 513 videos—I’ve pieced together an infographic that shows
-           how these essential considerations intersect in our everyday engineering practices. This journey is not just a technical deep dive; it’s a mission
-            to understanding the heart and soul behind creating responsible, sustainable, and ethical solutions in a complex world.
-      </p>
-      <p>
-        As you can see the bar chart (visualizing data). This chart conceptually offers an overview of how each resource emphasizes our core themes. 
-        Picture it as a map that guides you through the intellectual terrain of modern engineering ethics. Each resource is evaluated against frameworks that
-         many of us in the engineering field might not hold so dear but must oblige to, some such frameworks are: the APEGA Code of Ethics, Universal Design Principles, Circular Economy concepts, 
-         and the innovative ideas behind Doughnut Economics. I coded this visualization to be more than just a pretty picture and more of a fancy invitation to explore how human safety, environmental 
-         responsibility, cost-effectiveness, and ethics are all intertwined. These basic concepts dance around us and ultimately the balance of all four leads to solutions in the real-world.
-      </p>
+      Welcome to my little corner of the internet where I delve deeper into the fascinating world of engineering ethics and design. In this exploration, 
+      I focus on three key pillars: Design for Safety, Design for Environment, and Design for Cost. Now, you might think engineering is all about gadgets
+      and gizmos, but it’s so much more than that—it’s about ensuring our innovations keep people safe, protect our planet, and remain financially viable.
+      Drawing insights from a variety of extra resources—scholarly articles, influential books, and some awesome ENGG 513 videos—I’ve pieced together an infographic that shows
+      how these essential considerations intersect in our everyday engineering practices. This journey is not just a technical deep dive; it’s a mission
+      to understanding the heart and soul behind creating responsible, sustainable, and ethical solutions in a complex world.
+    </p>
+    <p>
+      As you can see the bar chart (visualizing data). This chart conceptually offers an overview of how each resource emphasizes our core themes. 
+      Picture it as a map that guides you through the intellectual terrain of modern engineering ethics. Each resource is evaluated against frameworks that
+      many of us in the engineering field might not hold so dear but must oblige to, some such frameworks are: the APEGA Code of Ethics, Universal Design Principles, Circular Economy concepts, 
+      and the innovative ideas behind Doughnut Economics. I coded this visualization to be more than just a pretty picture and more of a fancy invitation to explore how human safety, environmental 
+      responsibility, cost-effectiveness, and ethics are all intertwined. These basic concepts dance around us and ultimately the balance of all four leads to solutions in the real-world.
+    </p>
+    
     <div class="chart-container">
       <canvas id="myChart" width="1200" height="600"></canvas>
       <div class="legend">
-        <!-- The four categories, with matching color or pattern boxes -->
         <div class="legend-item">
-          <!-- Safety => Solid deep red -->
           <div class="legend-color-box" style="background: #C54A5E;"></div>
           <span>Safety (Red Fill)</span>
         </div>
         <div class="legend-item">
-          <!-- Environment => black stripes -->
           <div class="legend-color-box" style="
             background: repeating-linear-gradient(
               135deg,
@@ -182,7 +204,6 @@
           <span>Environment (Black Stripes)</span>
         </div>
         <div class="legend-item">
-          <!-- Cost => red stripes -->
           <div class="legend-color-box" style="
             background: repeating-linear-gradient(
               135deg,
@@ -195,7 +216,6 @@
           <span>Cost (Red Stripes)</span>
         </div>
         <div class="legend-item">
-          <!-- Ethics => Solid black -->
           <div class="legend-color-box" style="background: #000;"></div>
           <span>Ethics (Black Fill)</span>
         </div>
@@ -204,8 +224,7 @@
 
     <script>
       /*
-        Data: same structure
-        8 resources, each with 4 categories:
+        Data: 8 resources, each with 4 categories:
           0) Safety
           1) Environment
           2) Cost
@@ -213,45 +232,41 @@
       */
       const data = [
         { name: "Universal Design",  values: [9, 5, 4, 7] },
-        { name: "Design for Misuse", values: [10,4, 4, 8] },
+        { name: "Design for Misuse", values: [10, 4, 4, 8] },
         { name: "Everyday Things",   values: [7, 4, 3, 6] },
         { name: "Ethical Social Media", values: [3, 3, 2, 9] },
         { name: "Circular Design",   values: [4, 9, 5, 7] },
-        { name: "Ecological Eng.",   values: [5, 10,4, 6] },
+        { name: "Ecological Eng.",   values: [5, 10, 4, 6] },
         { name: "SDGs",              values: [6, 9, 3, 7] },
-        { name: "Doughnut Econ.",    values: [3, 8, 10,6] }
+        { name: "Doughnut Econ.",    values: [3, 8, 10, 6] }
       ];
 
-      
-      let patternEnv = null;  // environment stripes
-      let patternCost = null; // cost stripes
+      let patternEnv = null;  
+      let patternCost = null; 
 
       const colorSafety = "#C54A5E"; 
       const colorEnv    = "#000";    
       const colorCost   = "#C54A5E"; 
       const colorEthics = "#000";    
 
-      // Canvas setup
       const canvas = document.getElementById("myChart");
       const ctx = canvas.getContext("2d");
       const chartWidth = canvas.width;
       const chartHeight = canvas.height;
       const padding = 60;
 
-      // Find max value for y-scale
       let maxVal = 0;
       data.forEach(resource => {
         resource.values.forEach(score => {
           if (score > maxVal) maxVal = score;
         });
       });
-      maxVal = Math.ceil(maxVal); // e.g., 10
+      maxVal = Math.ceil(maxVal);
 
       const yScale = (chartHeight - 2 * padding) / maxVal;
       const barWidth = 20;
       const groupWidth = 140;
 
-      // Stripe pattern creation
       function createStripePattern(color) {
         const stripeCanvas = document.createElement("canvas");
         stripeCanvas.width = 8;
@@ -267,28 +282,22 @@
         return ctx.createPattern(stripeCanvas, "repeat");
       }
 
-      // Generate patterns after window loads
       window.addEventListener("load", () => {
-        patternEnv = createStripePattern(colorEnv);   // black stripes
-        patternCost = createStripePattern(colorCost); // red stripes
+        patternEnv = createStripePattern(colorEnv);
+        patternCost = createStripePattern(colorCost);
         drawChart();
       });
 
       function drawChart() {
-        // Axes
         ctx.beginPath();
-        // X-axis
         ctx.moveTo(padding, chartHeight - padding);
         ctx.lineTo(chartWidth - padding, chartHeight - padding);
-        // Y-axis
         ctx.moveTo(padding, padding);
         ctx.lineTo(padding, chartHeight - padding);
-        // Deep red lines
         ctx.strokeStyle = "#C54A5E";
         ctx.lineWidth = 2;
         ctx.stroke();
 
-        // Horizontal grid lines & y-axis labels
         ctx.font = "14px Georgia";
         ctx.fillStyle = "#F2E6E0";
         ctx.textAlign = "right";
@@ -296,47 +305,36 @@
 
         for (let i = 0; i <= maxVal; i++) {
           const y = chartHeight - padding - i * yScale;
-          // Y-axis label
           ctx.fillText(i, padding - 5, y);
-          // Grid line
           ctx.beginPath();
           ctx.moveTo(padding, y);
           ctx.lineTo(chartWidth - padding, y);
-          ctx.strokeStyle = "rgba(197,74,94,0.2)"; 
+          ctx.strokeStyle = "rgba(197,74,94,0.2)";
           ctx.lineWidth = 1;
           ctx.stroke();
         }
 
-        // Draw bars
         data.forEach((resource, i) => {
           const x0 = padding + i * groupWidth;
           resource.values.forEach((val, j) => {
             const barHeight = val * yScale;
             const barX = x0 + j * barWidth;
             const barY = chartHeight - padding - barHeight;
-
-            // Decide fill style
             let fill = "#ccc";
             if (j === 0) { 
-              // Safety => red
               fill = colorSafety; 
             } else if (j === 1) { 
-              // Environment => black stripes
               fill = patternEnv; 
             } else if (j === 2) { 
-              // Cost => red stripes
               fill = patternCost; 
             } else if (j === 3) { 
-              // Ethics => solid black
               fill = colorEthics; 
             }
-
             ctx.fillStyle = fill;
             ctx.fillRect(barX, barY, barWidth, barHeight);
           });
         });
 
-        // X-axis labels
         ctx.textAlign = "center";
         ctx.textBaseline = "top";
         data.forEach((resource, i) => {
@@ -351,22 +349,22 @@
     <!-- Discussion -->
     <h2>Discussion and Insights</h2>
     <p> 
-        Let’s unpack what the chart reveals. For instance, you’ll notice that resources like Design for Misuse and Universal Design place a significant
-         emphasis on Safety. This focus is entirely logical: protecting users from both accidental mishaps and deliberate misuse is at the very core of 
-         responsible design, as a software engineer this is also a crucial standard to uphold at all times, especially with the ability to access personal information.
-          In his classic work, The Design of Everyday Things, Donald Norman eloquently demonstrates how intuitive, user-centric designs
-          can dramatically reduce errors and enhance overall safety and usability. On the other hand, there’s a noticeable trend in resources like Ecological 
-          Engineering and Circular Design, which highlight the growing importance of Environmental sustainability. Their focus on eco-friendly materials, 
-          waste reduction, and life-cycle assessments resonates strongly with the United Nations’ Sustainable Development Goals—especially SDG 12, which 
-          calls for responsible consumption and production, and SDG 13, which demands urgent climate action.
+      Let’s unpack what the chart reveals. For instance, you’ll notice that resources like Design for Misuse and Universal Design place a significant
+      emphasis on Safety. This focus is entirely logical: protecting users from both accidental mishaps and deliberate misuse is at the very core of 
+      responsible design, as a software engineer this is also a crucial standard to uphold at all times, especially with the ability to access personal information.
+      In his classic work, The Design of Everyday Things, Donald Norman eloquently demonstrates how intuitive, user-centric designs
+      can dramatically reduce errors and enhance overall safety and usability. On the other hand, there’s a noticeable trend in resources like Ecological 
+      Engineering and Circular Design, which highlight the growing importance of Environmental sustainability. Their focus on eco-friendly materials, 
+      waste reduction, and life-cycle assessments resonates strongly with the United Nations’ Sustainable Development Goals—especially SDG 12, which 
+      calls for responsible consumption and production, and SDG 13, which demands urgent climate action.
     </p>
     <p>
-        Then there’s the Cost dimension, as illustrated by the intriguing framework of Doughnut Economics. This approach challenges us to rethink traditional economic
-        growth by balancing financial constraints with social and environmental imperatives, suggesting that profitability and fairness should go hand in hand. And basically what
-        underpins all these discussions is Ethics. The “Ethical Design in Social Media” study by Saura et al. provides a compelling reminder that our design decisions 
-        have real-world consequences—they can shape user behavior in profound ways, for better or worse. This study serves as a call to action for engineers and designers: 
-        it’s not enough to innovate; we must also carefully consider the moral implications of our work, ensuring that we protect public welfare, privacy, and autonomy in 
-        line with the APEGA Code of Ethics.
+      Then there’s the Cost dimension, as illustrated by the intriguing framework of Doughnut Economics. This approach challenges us to rethink traditional economic
+      growth by balancing financial constraints with social and environmental imperatives, suggesting that profitability and fairness should go hand in hand. And basically what
+      underpins all these discussions is Ethics. The “Ethical Design in Social Media” study by Saura et al. provides a compelling reminder that our design decisions 
+      have real-world consequences—they can shape user behavior in profound ways, for better or worse. This study serves as a call to action for engineers and designers: 
+      it’s not enough to innovate; we must also carefully consider the moral implications of our work, ensuring that we protect public welfare, privacy, and autonomy in 
+      line with the APEGA Code of Ethics.
     </p>
 
     <!-- References -->
